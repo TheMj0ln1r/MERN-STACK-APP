@@ -1,26 +1,32 @@
-const express = require("express");
-//importing db model
-const Workout = require("../models/workoutModel")
-//importing db controllers 
-const {createWorkout,getWorkouts,getWorkout,deleteWorkout,updateWorkout} = require("../controllers/workoutControllers")
-//creates a Router object that allows you to define routes and group related route handlers together
+const express = require('express')
+const {
+  createWorkout,
+  getWorkouts,
+  getWorkout,
+  deleteWorkout,
+  updateWorkout
+} = require('../controllers/workoutController')
+const requireAuth = require('../middleware/requireAuth')
+
 const router = express.Router()
 
-//route handlers
+// require auth for all workout routes
+router.use(requireAuth)
 
-//get all workouts
-router.get("/",getWorkouts)
-//GET single workout
-router.get("/:id",getWorkout)
+// GET all workouts
+router.get('/', getWorkouts)
 
-//POST a new workout
-router.post("/",createWorkout)
+//GET a single workout
+router.get('/:id', getWorkout)
 
-//DELETE a workout
-router.delete("/:id",deleteWorkout)
+// POST a new workout
+router.post('/', createWorkout)
 
-//UPDATE a workout
-router.patch("/:id",updateWorkout)
+// DELETE a workout
+router.delete('/:id', deleteWorkout)
+
+// UPDATE a workout
+router.patch('/:id', updateWorkout)
+
 
 module.exports = router
- 
